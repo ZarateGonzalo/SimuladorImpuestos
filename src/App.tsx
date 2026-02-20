@@ -49,18 +49,14 @@ function App() {
         setExpenses={setSpecialExpenses}
       />
       <button
-        onClick={() =>
-          alert(
-            "El monto total a pagar es $" +
-              (price +
-                freightUsd +
-                foreignMangementFee +
-                specialExpenses.reduce(
-                  (sum, expense) => sum + expense.price,
-                  0,
-                )),
-          )
-        }
+        onClick={() => {
+          const costoFinal =
+            price +
+            freightUsd +
+            foreignMangementFee +
+            specialExpenses.reduce((sum, expense) => sum + expense.price, 0);
+          alert("El monto total a pagar es $" + costoFinal.toFixed(2));
+        }}
       >
         Calcular Total
       </button>
