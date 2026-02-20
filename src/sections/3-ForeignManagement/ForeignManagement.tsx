@@ -28,6 +28,7 @@ export default function ForeignManagement({
     if (isValidNumber(agencyUsd) && isValidNumber(insuranceUsd)) {
       setForeignMangementFee(Number(agencyUsd) + Number(insuranceUsd));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agencyUsd, insuranceUsd]);
 
   return (
