@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ForeignManagementProps = {
   purchaseTotal: number; // total de la compra en USD
+  setForeignMangementFee: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function ForeignManagement({
   purchaseTotal,
+  setForeignMangementFee,
 }: ForeignManagementProps) {
   // --- USD inputs only ---
   const [agencyUsd, setAgencyUsd] = useState("0");
@@ -16,6 +18,17 @@ export default function ForeignManagement({
 
   const usdToPct = (usd: string) =>
     purchaseTotal === 0 ? "0.00" : format2((Number(usd) / purchaseTotal) * 100);
+
+  const isValidNumber = (value: string) => {
+    const n = Number(value);
+    return value.trim() !== "" && !Number.isNaN(n);
+  };
+
+  useEffect(() => {
+    if (isValidNumber(agencyUsd) && isValidNumber(insuranceUsd)) {
+      setForeignMangementFee(Number(agencyUsd) + Number(insuranceUsd));
+    }
+  }, [agencyUsd, insuranceUsd]);
 
   return (
     <div className="border p-4 space-y-4">
