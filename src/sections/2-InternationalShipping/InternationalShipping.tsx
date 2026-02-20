@@ -54,13 +54,18 @@ export default function InternationalShipping({ setFreightUsd }: Props) {
 
       {/* Unit toggle */}
       <div style={{ marginTop: 8 }}>
-        <button type="button" onClick={() => setUnit("kg")}>
+        <button
+          type="button"
+          className={unit === "kg" ? "selected-unit" : ""}
+          onClick={() => setUnit("kg")}
+        >
           kg
         </button>
 
         <button
           type="button"
           onClick={() => setUnit("m3")}
+          className={unit === "m3" ? "selected-unit" : ""}
           style={{ marginLeft: 8 }}
         >
           m³

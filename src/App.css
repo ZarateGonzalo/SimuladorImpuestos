@@ -18,6 +18,11 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.selected-unit {
+  background-color: rgb(255, 252, 252);
+  color: black;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
