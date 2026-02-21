@@ -36,7 +36,7 @@ export default function LocalLogistics({
 
       {/* Transporte interno */}
       <div className="flex items-center gap-2">
-        <span className="w-40">Transporte interno:</span>
+        <span className="w-40">Transporte interno: </span>
         <input
           type="number"
           className="border px-2 w-32"
@@ -46,7 +46,7 @@ export default function LocalLogistics({
             setInternalTransport(format2(Number(internalTransport || 0)))
           }
         />
-        <span>USD</span>
+        <span> USD </span>
         <span className="text-sm text-gray-600">
           ({usdToPct(internalTransport)}%)
         </span>
@@ -54,7 +54,7 @@ export default function LocalLogistics({
 
       {/* Resguardo */}
       <div className="flex items-center gap-2">
-        <span className="w-40">Resguardo:</span>
+        <span className="w-40">Resguardo: </span>
         <input
           type="number"
           className="border px-2 w-32"
@@ -62,13 +62,13 @@ export default function LocalLogistics({
           onChange={(e) => setStorage(e.target.value)}
           onBlur={() => setStorage(format2(Number(storage || 0)))}
         />
-        <span>USD</span>
+        <span> USD </span>
         <span className="text-sm text-gray-600">({usdToPct(storage)}%)</span>
       </div>
 
       {/* Envío provincia */}
       <div className="flex items-center gap-2">
-        <span className="w-40">Envío provincia:</span>
+        <span className="w-40">Envío provincia: </span>
         <input
           type="number"
           className="border px-2 w-32"
@@ -78,7 +78,7 @@ export default function LocalLogistics({
             setProvinceShipping(format2(Number(provinceShipping || 0)))
           }
         />
-        <span>USD</span>
+        <span> USD </span>
         <span className="text-sm text-gray-600">
           ({usdToPct(provinceShipping)}%)
         </span>
