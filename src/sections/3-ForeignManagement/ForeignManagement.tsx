@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 type ForeignManagementProps = {
   purchaseTotal: number; // total de la compra en USD
   setForeignMangementFee: React.Dispatch<React.SetStateAction<number>>;
+  setInsuranceFee: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function ForeignManagement({
   purchaseTotal,
+  setInsuranceFee,
   setForeignMangementFee,
 }: ForeignManagementProps) {
   // --- USD inputs only ---
@@ -25,6 +27,9 @@ export default function ForeignManagement({
   };
 
   useEffect(() => {
+    if (isValidNumber(insuranceUsd)) {
+      setInsuranceFee(Number(insuranceUsd));
+    }
     if (isValidNumber(agencyUsd) && isValidNumber(insuranceUsd)) {
       setForeignMangementFee(Number(agencyUsd) + Number(insuranceUsd));
     }
