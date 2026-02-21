@@ -4,9 +4,14 @@ import type { Currency } from "../../../types";
 type Props = {
   currency: Currency;
   setCostoTotal: React.Dispatch<React.SetStateAction<number>>;
+  setUnits: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function AbroadCalculator({ currency, setCostoTotal }: Props) {
+export default function AbroadCalculator({
+  currency,
+  setCostoTotal,
+  setUnits,
+}: Props) {
   // 🔹 number state (business logic)
   const [costoIndividual, setCostoIndividual] = useState(1000);
   const [cantidad, setCantidad] = useState(5);
@@ -28,6 +33,7 @@ export default function AbroadCalculator({ currency, setCostoTotal }: Props) {
   }, [costoIndividual]);
 
   useEffect(() => {
+    setUnits(cantidad);
     setCantidadInput(cantidad.toString());
   }, [cantidad]);
 

@@ -7,10 +7,14 @@ import ExchangeRateInput from "./components/ExchangeRateInput";
 
 type AbroadPurchaseProps = {
   setCostoTotalUsd: React.Dispatch<React.SetStateAction<number>>;
+  setDollarPriceUsd: React.Dispatch<React.SetStateAction<number>>;
+  setUnits: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function AbroadPurchase({
   setCostoTotalUsd,
+  setDollarPriceUsd,
+  setUnits,
 }: AbroadPurchaseProps) {
   // 🔹 UI state only
   const [currency, setCurrency] = useState<Currency>("USD");
@@ -29,6 +33,7 @@ export default function AbroadPurchase({
 
   // 🔹 DISPLAY ONLY (never stored)
   useEffect(() => {
+    setDollarPriceUsd(dollarPrice);
     if (currency === "USD") {
       setCostoTotalUsd(price);
     } else if (dollarPrice === 0) {
@@ -47,7 +52,11 @@ export default function AbroadPurchase({
       <CurrencySelector currency={currency} setCurrency={setCurrency} />
 
       {/* Calculator ALWAYS outputs USD */}
-      <AbroadCalculator currency={currency} setCostoTotal={setPrice} />
+      <AbroadCalculator
+        currency={currency}
+        setCostoTotal={setPrice}
+        setUnits={setUnits}
+      />
 
       {/* Exchange rate */}
       <ExchangeRateInput

@@ -1,11 +1,13 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import AbroadPurchase from "./sections/1-AbroadPurchase/AbroadPurchase";
 import InternationalShipping from "./sections/2-InternationalShipping/InternationalShipping";
 import ForeignManagement from "./sections/3-ForeignManagement/ForeignManagement";
 import SpecialExpenses from "./sections/4-SpecialEpenses/SpecialExpenses";
 import CustomsExpenses from "./sections/5-CustomsExpenses/CustomsExpenses";
 import CustomsTaxes from "./sections/6-CustomsTaxes/CustomsTaxes";
+import LocalLogistics from "./sections/7-LocalLogistics/LocalLogistics";
+import Result from "./sections/7-Result/Result";
 
 export type SpecialExpense = {
   name: string;
@@ -14,33 +16,44 @@ export type SpecialExpense = {
 
 function App() {
   const [price, setPrice] = useState(1000);
+  const [units, setUnits] = useState(5);
+  const [dollarPrice, setDollarPrice] = useState(3.5);
   const [freightUsd, setFreightUsd] = useState(0);
   const [insurance, setInsurance] = useState(0);
   const [foreignMangementFee, setForeignMangementFee] = useState(0);
   const [specialExpenses, setSpecialExpenses] = useState<SpecialExpense[]>([]);
   const [customsExpenses, setCustomsExpenses] = useState(0);
   const [taxesExpenses, setTaxesExpenses] = useState(0);
-
-  useEffect(() => {
-    //console.log("Purchase:", price);
-    //console.log("Freight:", freightUsd);
-    //console.log("Foreign Management Fee:", foreignMangementFee);
-    //console.log("Special expenses:", specialExpenses);
-    //console.log("Customs expenses:", customsExpenses);
-    console.log(
-      "Total:",
+  const [logisticsUsd, setLogisticsUsd] = useState(0);
+  const finalCost = useMemo(() => {
+    return (
       price +
-        freightUsd +
-        foreignMangementFee +
-        specialExpenses.reduce((sum, expense) => sum + expense.price, 0),
+      freightUsd +
+      foreignMangementFee +
+      specialExpenses.reduce((sum, expense) => sum + expense.price, 0) +
+      customsExpenses +
+      taxesExpenses +
+      logisticsUsd
     );
-  }, [price, freightUsd, specialExpenses, foreignMangementFee]);
+  }, [
+    price,
+    freightUsd,
+    foreignMangementFee,
+    specialExpenses,
+    customsExpenses,
+    taxesExpenses,
+    logisticsUsd,
+  ]);
 
   return (
     <main>
       <h1>Simulación Aduana</h1>
 
-      <AbroadPurchase setCostoTotalUsd={setPrice} />
+      <AbroadPurchase
+        setDollarPriceUsd={setDollarPrice}
+        setCostoTotalUsd={setPrice}
+        setUnits={setUnits}
+      />
 
       <InternationalShipping setFreightUsd={setFreightUsd} />
 
@@ -63,20 +76,16 @@ function App() {
         freightUsd={freightUsd}
         setTaxesExpenses={setTaxesExpenses}
       />
-      <button
-        onClick={() => {
-          const costoFinal =
-            price +
-            freightUsd +
-            foreignMangementFee +
-            specialExpenses.reduce((sum, expense) => sum + expense.price, 0) +
-            customsExpenses +
-            taxesExpenses;
-          alert("El monto total a pagar es $" + costoFinal.toFixed(2));
-        }}
-      >
-        Calcular Total
-      </button>
+      <LocalLogistics
+        abroadPriceUsd={price}
+        setLogisticsUsd={setLogisticsUsd}
+      />
+      <Result
+        originalPriceUsd={price}
+        finalUsdTotal={finalCost}
+        finalPenTotal={finalCost * dollarPrice}
+        units={units}
+      />
     </main>
   );
 }
